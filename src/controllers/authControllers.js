@@ -20,7 +20,7 @@ module.exports.signup_get = (req, res) => {
 }
 
 module.exports.login_get = (req, res) => {
-    res.render('./userViews/signup', {
+    res.render('./userViews/login', {
         type: 'login',
     })
 }
