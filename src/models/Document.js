@@ -6,15 +6,15 @@ const documentSchema = mongoose.Schema({
         type: String,
         trim: true,
     },
-    document:[{
-        originalName:{
-            type:String
-        },
-        filename:{
-            type:String
-        }
-    }],
-    owner:{
+    desc:{
+        type: String,
+        trim: true,
+    },
+    url:{
+        type: String,
+        trim: true,
+    },
+    user:{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
     }

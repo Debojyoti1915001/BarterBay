@@ -10,7 +10,12 @@ const { generateShortId } = require('../utilities/Utilities');
 
 const maxAge = 30 * 24 * 60 * 60
 
-
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+    cloud_name: "dxjcjsopt",
+    api_key: "776272262761276",
+    api_secret: "ZvhJVjaKl4CTKyDJIN-xKfNOit4"
+  });
 
 // controller actions
 module.exports.signup_get = (req, res) => {
@@ -187,71 +192,31 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
-module.exports.upload_post = async (req, res) => {
-    //console.log("in uploads",req.body)
 
-    try {
-        let { name } = req.body
-
-        const files = req.files
-        const dname = name.toLowerCase()
-        const obj = JSON.parse(JSON.stringify(files))
-        // console.log('files', obj)
-        //console.log(obj.document[0].filename)
-        if (Object.keys(obj).length === 0) {
-            req.flash('error_msg', 'Please select atleast one file to upload')
-            return res.redirect('/user/profile')
-        }
-        if (name === '') {
-            req.flash('error_msg', 'Disease name cant be empty')
-            return res.redirect('/user/profile')
-        }
-        const userDocument = await req.user
-            .populate('document', 'name')
-            .execPopulate()
-        //console.log('disease',userDisease)
-        
-        //  console.log('disease',existName)
-
-        const document = {
-            originalName: '',
-            filename: '',
-        }
-        
-        let newDocument = await new Document({
-            name,
-        }).save()
-        if (obj.document) {
-            document.originalName = obj.document[0].originalname
-            document.filename = `/uploads/${req.user.email}/${dname}/${obj.document[0].filename}`
-            newDocument.document.push(document)
-        }
-        await newDocument.save()
-
-        if (!newDocument) {
-            req.flash('error_msg', 'Unable to save the disease details')
-            return res.redirect('/user/profile')
-        }
-        req.user.document.push(newDocument)
-        await req.user.save()
-
-        // console.log(newDisease)
-        req.flash('success_msg', 'Sucessfully uploaded document details.')
-        return res.redirect('/user/profile')
-    } catch (err) {
-        console.log('error')
-        console.error(err)
-        req.flash('error_msg', 'Something went wrong')
-        return res.redirect('/user/profile')
-    }
-}
 
 
 
 module.exports.profile_get = async (req, res) => {
     
-    res.render('./userViews/profile')
+    res.json(req.user)
     // console.log('in profile page')
+}
+module.exports.createPost = async (req, res) => {
+    const {name,desc}=req.body
+    const picture =req.file.path
+    const result=await cloudinary.uploader.upload(picture, {public_id: "uploaded"})
+    // console.log(result.secure_url)
+    
+      const url = cloudinary.url("uploaded", {
+        width: 1500,
+        height: 1000,
+        Crop: 'fill'
+      });
+      console.log(url)
+      const document = new Document({ name, desc,url,user:req.user._id})
+      let saveDocument = await document.save()
+      console.log(saveDocument)
+    res.render('./userViews/index')
 }
 
 module.exports.logout_get = async (req, res) => {
@@ -359,25 +324,7 @@ module.exports.resetPassword = async (req, res) => {
 
 
 
-module.exports.picupload_post = async (req, res) => {
-    const user = req.user
-    const picPath = user.profilePic
-    await User.findOneAndUpdate(
-        { _id: user._id },
-        { $set: { profilePic: picPath } },
-        { new: true },
-        (err, doc) => {
-            if (err) {
-                console.log('Something wrong when updating data!')
-                req.flash('error_msg', 'Something wrong when updating data!')
-                res.redirect('/user/profile')
-            }
 
-            // console.log(doc)
-        }
-    )
-    res.redirect('/user/profile')
-}
 
 
 

@@ -114,21 +114,34 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="modal-body">
                     <h1>Create a post</h1>
                 </div>
-                <div class="modal-form">
-                    <h3>What do you wnat to barter today?</h3>
-                    <input
-                        type="text"
-                        placeholder="Ex. Get 50% off"
-                        autocomplete="off"
-                        autofocus
-                    />
-                </div>
+                
+                <form action="/user/createPost"  method="POST" enctype="multipart/form-data">
+                    <div class="modal-form">
+                        <h3>What do you want to barter today?</h3>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                        />
+                        <input
+                            type="textarea"
+                            name="desc"
+                            placeholder="Description"
+                        />
+                    </div>
                 <label for="img" class="modal-form">Select image:</label>
-                <input type="file" id="img" name="img" accept="image/*" />
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-default btn-file">
+                            Browse… <input type="file" id="profilePic"name="photo">
+                        </span>
+                    </span>
+                </div>
                 <div class="cta">
                     <button>Continue</button>
                     <button>Cancel</button>
                 </div>
+            </form>
             </div>
         </div>
         <!-- Page Content -->
