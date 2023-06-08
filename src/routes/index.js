@@ -3,7 +3,14 @@ const router = express.Router()
 const { contactMail } = require('../config/nodemailer');
 //Route for homepage
 router.get('/', (req, res) => {
-    res.render('./userViews/index')
+    const token=req.cookies.jwt
+    var isLoggedIn=false
+    if(token){
+        isLoggedIn=true
+    }
+    res.render('./userViews/index',{
+        isLoggedIn
+    })
 });
 
 

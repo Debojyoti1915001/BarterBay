@@ -324,6 +324,23 @@ module.exports.resetPassword = async (req, res) => {
 
 
 
+module.exports.ratings_post = async (req, res) => {
+    const { val } = req.body
+    const id=req.params.id
+    const document=await Document.findOne({_id:id})
+    const ratings=document.ratings
+    if(ratings.length==0){
+        ratings=[0,0,0,0,0]
+    }
+    ratings[val]++
+    const doc=await Document.findOneAndUpdate({ _id: id }, { $set: { ratings } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    res.send(doc)
+}
+
 
 
 
