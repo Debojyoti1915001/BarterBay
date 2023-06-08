@@ -22,7 +22,7 @@ const documentSchema = mongoose.Schema({
     ],
     tags:[
         {
-            type:Number,
+            type:String,
             trim:true,
         }
     ],

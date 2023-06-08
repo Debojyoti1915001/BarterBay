@@ -15,7 +15,7 @@ cloudinary.config({
     cloud_name: "dxjcjsopt",
     api_key: "776272262761276",
     api_secret: "ZvhJVjaKl4CTKyDJIN-xKfNOit4"
-  });
+});
 
 // controller actions
 module.exports.signup_get = (req, res) => {
@@ -32,7 +32,7 @@ module.exports.login_get = (req, res) => {
 
 module.exports.signup_post = async (req, res) => {
     const { name, email, password, confirmPwd, phoneNumber } = req.body
-    
+
     const nominee = null
     console.log('in sign up route', req.body)
     if (password != confirmPwd) {
@@ -58,7 +58,7 @@ module.exports.signup_post = async (req, res) => {
             )
             return res.redirect('/user/login')
         }
-        const short_id = generateShortId(name,phoneNumber);
+        const short_id = generateShortId(name, phoneNumber);
         // console.log('Short ID generated is: ', short_id)
         const user = new User({
             email,
@@ -67,7 +67,7 @@ module.exports.signup_post = async (req, res) => {
             phoneNumber,
             short_id,
             nominee,
-            
+
         })
         let saveUser = await user.save()
         //console.log(saveUser);
@@ -147,7 +147,7 @@ module.exports.login_post = async (req, res) => {
         //console.log("user",user)
 
         const userExists = await User.findOne({ email })
-        console.log("userexsits",userExists)
+        console.log("userexsits", userExists)
 
         if (!userExists.active) {
             const currDate = new Date()
@@ -192,44 +192,41 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
-
-
-
-
 module.exports.profile_get = async (req, res) => {
-    
+
     res.json(req.user)
     // console.log('in profile page')
 }
+
 module.exports.createPost = async (req, res) => {
-    const {name,desc,tags}=req.body
-    const picture =req.file.path
-    const tagsArray=[]
-    var cur=""
-    for(var i of tags){
-        if(i==" ")continue
-        else if(i==','){
+    const { name, desc, tags } = req.body
+    const picture = req.file.path
+    const tagsArray = []
+    var cur = ""
+    for (var i of tags) {
+        if (i == " ") continue
+        else if (i == ',') {
             tagsArray.push(cur)
-            cur=""
-        }else{
-            cur=cur+i
+            cur = ""
+        } else {
+            cur = cur + i
         }
     }
-    if(cur.length){
+    if (cur.length) {
         tagsArray.push(cur)
     }
-    const result=await cloudinary.uploader.upload(picture, {public_id: "uploaded"})
+    const result = await cloudinary.uploader.upload(picture, { public_id: "uploaded" })
     // console.log(result.secure_url)
-    
-      const url = cloudinary.url("uploaded", {
+
+    const url = cloudinary.url("uploaded", {
         width: 1500,
         height: 1000,
         Crop: 'fill'
-      });
-      console.log(url)
-      const document = new Document({ name, desc,url,user:req.user._id,tags:tagsArray})
-      let saveDocument = await document.save()
-      console.log(saveDocument)
+    });
+    console.log(url)
+    const document = new Document({ name, desc, url, user: req.user._id, tags: tagsArray })
+    let saveDocument = await document.save()
+    console.log(saveDocument)
     res.redirect('/')
 }
 
@@ -336,18 +333,17 @@ module.exports.resetPassword = async (req, res) => {
     }
 }
 
-
-
 module.exports.ratings_post = async (req, res) => {
-    const { val } = req.body
-    const id=req.params.id
-    const document=await Document.findOne({_id:id})
-    const ratings=document.ratings
-    if(ratings.length==0){
-        ratings=[0,0,0,0,0]
+    const val = req.body.rate
+    console.log(req.body)
+    const id = req.params.id
+    const document = await Document.findOne({ _id: id })
+    var ratings = document.ratings
+    if (ratings.length == 0) {
+        ratings = [0, 0, 0, 0, 0]
     }
     ratings[val]++
-    const doc=await Document.findOneAndUpdate({ _id: id }, { $set: { ratings } }, { new: true }, (err, doc) => {
+    const doc = await Document.findOneAndUpdate({ _id: id }, { $set: { ratings } }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }
@@ -355,6 +351,24 @@ module.exports.ratings_post = async (req, res) => {
     res.send(doc)
 }
 
+module.exports.search_post = async (req, res) => {
+    const search = req.body.search
+    const allDocument = await Document.find({})
+    const searchedData = []
+    for (var i of allDocument) {
+        var isPresent = false
+        for (var j of i.tags) {
+            if (j == search) {
+                isPresent = true;
+                break;
+            }
+        }
+        if (i.name == search || isPresent) {
+            searchedData.push(i);
+        }
+    }
+    res.send(searchedData)
+}
 
 
 
