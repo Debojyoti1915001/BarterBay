@@ -85,9 +85,11 @@ https://templatemo.com/tm-551-stand-blog
                                     >Contact Us</a
                                 >
                             </li>
+                            <% if(isLoggedIn){ %>
                             <li class="nav-item">
                                 <button class="btn" id="btn">Post</button>
                             </li>
+                            <% }else{ %>
                             <li class="nav-item">
                               <a class="nav-link" href="/user/login"
                                   >Login</a
@@ -98,6 +100,7 @@ https://templatemo.com/tm-551-stand-blog
                                 >Sign Up</a
                             >
                         </li>
+                        <%}%>
                         </ul>
                     </div>
                 </div>

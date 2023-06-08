@@ -66,7 +66,7 @@ router.get('/forgotPassword', redirectIfLoggedIn,authController.getForgotPasswor
 router.post('/forgotPassword', redirectIfLoggedIn,authController.forgotPassword)
 router.get('/resetPassword/:id/:token',authController.getPasswordResetForm)
 router.post('/resetPassword/:id/:token',authController.resetPassword)
-
+router.post('/rate/:id',requireAuth,authController.ratings_post)
 
 
 
