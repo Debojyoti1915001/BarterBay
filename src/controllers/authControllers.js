@@ -354,20 +354,31 @@ module.exports.ratings_post = async (req, res) => {
 module.exports.search_post = async (req, res) => {
     const search = req.body.search
     const allDocument = await Document.find({})
-    const searchedData = []
-    for (var i of allDocument) {
-        var isPresent = false
-        for (var j of i.tags) {
-            if (j == search) {
-                isPresent = true;
-                break;
+    const document = []
+        for (var i of allDocument) {
+            var isPresent = false
+            for (var j of i.tags) {
+                if (j == search) {
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (i.name == search || isPresent) {
+                document.push(i);
             }
         }
-        if (i.name == search || isPresent) {
-            searchedData.push(i);
-        }
+    
+    
+    console.log(document)
+    const token=req.cookies.jwt
+    var isLoggedIn=false
+    if(token){
+        isLoggedIn=true
     }
-    res.send(searchedData)
+    res.render('./userViews/searchPost',{
+        isLoggedIn,
+        document
+    })
 }
 
 
