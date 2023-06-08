@@ -13,7 +13,7 @@
             rel="stylesheet"
         />
 
-        <title>Stand CSS Blog by TemplateMo</title>
+        <title>Barter</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="/assets/css/templatemo-stand-blog.css" />
         <link rel="stylesheet" href="/assets/css/owl.css" />
         <link rel="stylesheet" href="/assets/css/index.css" />
+        <link rel="stylesheet" href="/assets/fonts/flaticon.wolf">
         <!--
 
 TemplateMo 551 Stand Blog
@@ -111,38 +112,40 @@ https://templatemo.com/tm-551-stand-blog
             <div class="bg"></div>
             <div class="modal-container">
                 <div class="modal-top">
-                    <i class="fas fa-arrow-left"></i>
-                    <i class="fas fa-times" id="close"></i>
+                    
+                    <i class="fas fa-times" id="close"> Close</i>
                 </div>
                 <div class="modal-body">
                     <h1>Create a post</h1>
                 </div>
                 
                 <form action="/user/createPost"  method="POST" enctype="multipart/form-data">
-                    <div class="modal-form">
+                    <div class="modal-form" style="padding-bottom: 5px;">
                         <h3>What do you want to barter today?</h3>
                         <input
                             type="text"
                             name="name"
                             placeholder="Name"
                         />
-                        <input
-                            type="textarea"
-                            name="desc"
-                            placeholder="Description"
-                        />
+        
                     </div>
+                    <div class="modal-form">
+                      <input
+                      type="textarea"
+                      name="desc"
+                      placeholder="Description"
+                  />
+              </div>
                 <label for="img" class="modal-form">Select image:</label>
                 <div class="input-group">
-                    <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                            Browse… <input type="file" id="profilePic"name="photo">
+                    <span class="input-group-btn" style="width: 50%;">
+                        <span class=" btn-default btn-file">
+                            Browse… <input type="file" id="profilePic"name="photo" width="50%">
                         </span>
                     </span>
                 </div>
                 <div class="cta">
                     <button>Continue</button>
-                    <button>Cancel</button>
                 </div>
             </form>
             </div>
