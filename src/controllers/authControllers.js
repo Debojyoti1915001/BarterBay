@@ -202,8 +202,22 @@ module.exports.profile_get = async (req, res) => {
     // console.log('in profile page')
 }
 module.exports.createPost = async (req, res) => {
-    const {name,desc}=req.body
+    const {name,desc,tags}=req.body
     const picture =req.file.path
+    const tagsArray=[]
+    var cur=""
+    for(var i of tags){
+        if(i==" ")continue
+        else if(i==','){
+            tagsArray.push(cur)
+            cur=""
+        }else{
+            cur=cur+i
+        }
+    }
+    if(cur.length){
+        tagsArray.push(cur)
+    }
     const result=await cloudinary.uploader.upload(picture, {public_id: "uploaded"})
     // console.log(result.secure_url)
     
@@ -213,10 +227,10 @@ module.exports.createPost = async (req, res) => {
         Crop: 'fill'
       });
       console.log(url)
-      const document = new Document({ name, desc,url,user:req.user._id})
+      const document = new Document({ name, desc,url,user:req.user._id,tags:tagsArray})
       let saveDocument = await document.save()
       console.log(saveDocument)
-    res.render('./userViews/index')
+    res.redirect('/')
 }
 
 module.exports.logout_get = async (req, res) => {
