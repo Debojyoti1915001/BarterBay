@@ -35,13 +35,13 @@ https://templatemo.com/tm-551-stand-blog
 
     <body>
         <!-- ***** Preloader Start ***** -->
-        <div id="preloader">
+        <!-- <div id="preloader">
             <div class="jumper">
                 <div></div>
                 <div></div>
                 <div></div>
             </div>
-        </div>
+        </div> -->
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
@@ -139,7 +139,7 @@ https://templatemo.com/tm-551-stand-blog
         <div class="modal" id="modal">
             <!-- Modal background -->
             <div class="bg"></div>
-            <div class="modal-container">
+            <div class="modal-container" style="width: 60%;">
                 <div class="modal-top">
                     
                     <i class="fas fa-times" id="close"> Close</i>
@@ -164,23 +164,27 @@ https://templatemo.com/tm-551-stand-blog
         
                     </div>
                     <div class="modal-form">
-                      <input
-                      type="textarea"
-                      name="desc"
-                      placeholder="Description"
-                  />
-                  <!-- <div class="modal-form">
-                    <input
-                    type="textarea"
-                    name="tags"
-                    placeholder="tags"
-                /> -->
+                      
+                    <textarea id="w3review"  type="textarea"
+                    name="desc"
+                    
+                    rows="4" cols="50" style="background-color: rgb(253, 253, 253); border: 1px solid #1111;"> Write Your Description Here !
+                    
+                    </textarea>
+                <div class="modal-form">
+                    <label for="cars">Choose Type</label>
+
+                    <select name="cars" id="cars"  style="background-color: rgb(255, 255, 255); border: 1px solid #1111;">
+                    <option value="group" name="type">Group</option>
+                    <option value="single" name="type">Individual</option>
+                    </select> 
+                </div>
               </div>
                 <label for="img" class="modal-form">Select image:</label>
                 <div class="input-group">
                     <span class="input-group-btn" style="width: 50%;">
                         <span class=" btn-default btn-file">
-                            Browse… <input type="file" id="profilePic"name="photo" width="50%">
+                            Browse… <input type="file" id="profilePic"name="photo" width="50%"  style="background-color: aliceblue; border: 1px solid #1111;">
                         </span>
                     </span>
                 </div>
