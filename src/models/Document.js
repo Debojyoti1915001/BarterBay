@@ -20,6 +20,12 @@ const documentSchema = mongoose.Schema({
             trim:true,
         }
     ],
+    tags:[
+        {
+            type:String,
+            trim:true,
+        }
+    ],
     user:{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'

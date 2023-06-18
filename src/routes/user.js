@@ -7,7 +7,7 @@ const multer = require('multer')
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         // console.log("in multer",file)
-        if(file.fieldname==='photo'){
+        if (file.fieldname === 'photo') {
             const userEmail = req.user.email.toLowerCase()
             var dir = `./public/uploads/${userEmail}/${file.fieldname}`
         }
@@ -20,11 +20,11 @@ const storage = multer.diskStorage({
         cb(null, dir)
     },
     filename: (req, file, cb) => {
-        cb(null,`File-${v4()}-${file.originalname}` )
+        cb(null, `File-${v4()}-${file.originalname}`)
     },
 })
 
-const upload = multer({ 
+const upload = multer({
     storage: storage,
     limits: { fileSize: 6000000 },
     fileFilter: function (req, file, cb) {
@@ -42,7 +42,7 @@ function checkFileType(file, cb) {
     } else {
         console.log("invalid file")
         // req.flash("error_msg", "Enter a valid picture of format jpeg jpg png") 
-        return cb(null,false)
+        return cb(null, false)
     }
 }
 
@@ -51,23 +51,23 @@ function checkFileType(file, cb) {
 const authController = require('../controllers/authControllers')
 const { requireAuth, redirectIfLoggedIn } = require('../middleware/userAuth')
 router.get('/verify/:id', authController.emailVerify_get)
-router.get('/signup',redirectIfLoggedIn, authController.signup_get)
+router.get('/signup', redirectIfLoggedIn, authController.signup_get)
 router.post('/signup', authController.signup_post)
 router.get('/login', redirectIfLoggedIn, authController.login_get)
 router.post('/login', authController.login_post)
 router.get('/logout', requireAuth, authController.logout_get)
 router.get('/profile', requireAuth, authController.profile_get)
 
-router.post('/createPost',requireAuth,upload.single('photo'), authController.createPost)
+router.post('/createPost', requireAuth, upload.single('photo'), authController.createPost)
 
 
 
-router.get('/forgotPassword', redirectIfLoggedIn,authController.getForgotPasswordForm)
-router.post('/forgotPassword', redirectIfLoggedIn,authController.forgotPassword)
-router.get('/resetPassword/:id/:token',authController.getPasswordResetForm)
-router.post('/resetPassword/:id/:token',authController.resetPassword)
-router.post('/rate/:id',requireAuth,authController.ratings_post)
+router.get('/forgotPassword', redirectIfLoggedIn, authController.getForgotPasswordForm)
+router.post('/forgotPassword', redirectIfLoggedIn, authController.forgotPassword)
+router.get('/resetPassword/:id/:token', authController.getPasswordResetForm)
+router.post('/resetPassword/:id/:token', authController.resetPassword)
+router.post('/rate/:id', requireAuth, authController.ratings_post)
 
-
+router.post('/search', authController.search_post)
 
 module.exports = router
