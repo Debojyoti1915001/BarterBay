@@ -356,7 +356,7 @@ module.exports.ratings_post = async (req, res) => {
     if (ratings.length == 0) {
         ratings = [0, 0, 0, 0, 0]
     }
-    ratings[val]++
+    ratings[val-1]++
     const doc = await Document.findOneAndUpdate({ _id: id }, { $set: { ratings } }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
