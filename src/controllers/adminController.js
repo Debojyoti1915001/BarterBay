@@ -12,8 +12,9 @@ cloudinary.config({
     api_secret: "ZvhJVjaKl4CTKyDJIN-xKfNOit4"
 });
 
-
-
+module.exports.dashboard_get = async (req, res) => {
+    res.render('./admin/dashboard')
+}
 
 module.exports.login_get = async (req, res) => {
     res.render('./admin/login')
