@@ -13,9 +13,23 @@ cloudinary.config({
 });
 
 module.exports.dashboard_get = async (req, res) => {
-    res.render('./admin/dashboard')
+    const user=await User.find({})
+    res.render('./admin/dashboard',{
+        user
+    })
 }
-
+module.exports.credit_get = async (req, res) => {
+    const id=req.params.id
+    const user=await User.findOne({_id:id})
+    var score=user.score+parseInt(req.body.score)
+    console.log(score)
+    const doc = await User.findOneAndUpdate({ _id: id }, { $set: { score } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.send(err)
+        }
+    });
+    res.redirect('/admin/dashboard')
+}
 module.exports.login_get = async (req, res) => {
     res.render('./admin/login')
 }
