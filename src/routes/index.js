@@ -5,7 +5,7 @@ const { contactMail } = require('../config/nodemailer');
 //Route for homepage
 router.get('/', async(req, res) => {
     const token=req.cookies.jwt
-    const document=await Document.find({})
+    const document=await Document.find({type:'single'})
     var isLoggedIn=false
     if(token){
         isLoggedIn=true
@@ -15,6 +15,20 @@ router.get('/', async(req, res) => {
         document
     })
 });
+
+router.get('/group', async(req, res) => {
+    const token=req.cookies.jwt
+    const document=await Document.find({type:'group'})
+    var isLoggedIn=false
+    if(token){
+        isLoggedIn=true
+    }
+    res.render('./userViews/index',{
+        isLoggedIn,
+        document
+    })
+});
+
 
 
 

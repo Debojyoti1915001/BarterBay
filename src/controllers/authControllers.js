@@ -213,6 +213,7 @@ module.exports.post_get = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
     const { name, desc, tags,type } = req.body
+    console.log(req.body)
     const picture = req.file.path
     const tagsArray = []
     var cur = ""
