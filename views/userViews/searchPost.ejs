@@ -339,7 +339,7 @@
                                             />
                                         </div>
                                         <div class="down-content">
-                                            <span><%=doc.name%></span>
+                                            <a href="/user/post/<%=doc._id%>"><span><%=doc.name%></span></a>
                                             <ul class="post-info">
                                                 <%for(var tag of doc.tags ){ %>
                                                 <li><a href="#"><%=tag%></a></li>

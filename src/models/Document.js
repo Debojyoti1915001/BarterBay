@@ -14,6 +14,10 @@ const documentSchema = mongoose.Schema({
         type: String,
         trim: true,
     },
+    type:{
+        type: String,
+        trim: true,
+    },
     ratings:[
         {
             type:Number,
@@ -29,7 +33,11 @@ const documentSchema = mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
-    }
+    },
+    comment:[{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'Comment'
+    }]
 })
 
 /*diseaseSchema.virtual('owner',{

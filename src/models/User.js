@@ -15,10 +15,13 @@ const userSchema = mongoose.Schema(
             trim:true, 
             required: [true, 'Short ID cannot be absent']
         },
+        score: {
+            type: Number,
+            trim: true,
+        },
         name: {
             type: String,
             trim: true,
-            required: [true, 'Name field cannot be empty']
         },
         document: [
             {

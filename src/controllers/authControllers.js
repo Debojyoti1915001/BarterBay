@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Document = require('../models/Document')
+const Comment = require('../models/Comment')
 const jwt = require('jsonwebtoken')
 const { signupMail, passwordMail } = require('../config/nodemailer')
 const path = require('path')
@@ -62,6 +63,7 @@ module.exports.signup_post = async (req, res) => {
         // console.log('Short ID generated is: ', short_id)
         const user = new User({
             email,
+            score:0,
             name,
             password,
             phoneNumber,
@@ -197,9 +199,20 @@ module.exports.profile_get = async (req, res) => {
     res.json(req.user)
     // console.log('in profile page')
 }
-
+module.exports.post_get = async (req, res) => {
+    const id=req.params.id
+    const _post=await Document.findOne({ _id: id})
+    const post=await _post.populate('comment').execPopulate()
+    console.log(post)
+    res.render('./userViews/post',
+    {
+        post
+    }
+    )
+    // console.log('in profile page')
+}
 module.exports.createPost = async (req, res) => {
-    const { name, desc, tags } = req.body
+    const { name, desc, tags,type } = req.body
     const picture = req.file.path
     const tagsArray = []
     var cur = ""
@@ -224,7 +237,7 @@ module.exports.createPost = async (req, res) => {
         Crop: 'fill'
     });
     console.log(url)
-    const document = new Document({ name, desc, url, user: req.user._id, tags: tagsArray })
+    const document = new Document({ name, desc, type,url, user: req.user._id, tags: tagsArray })
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
@@ -367,8 +380,6 @@ module.exports.search_post = async (req, res) => {
                 document.push(i);
             }
         }
-    
-    
     console.log(document)
     const token=req.cookies.jwt
     var isLoggedIn=false
@@ -381,8 +392,23 @@ module.exports.search_post = async (req, res) => {
     })
 }
 
-
-
-
-
-
+module.exports.comment_post = async (req, res) => {
+    const id = req.params.id
+    const com=req.body.comment
+    console.log(com)
+    const document = await Document.findOne({ _id: id })
+    const comment=document.comment
+    const newComment=new Comment({
+        name:req.user.name,
+        user:req.user._id,
+        desc:com,
+    })
+    let saveComment = await newComment.save()
+    comment.push(saveComment._id)
+    const doc = await Document.findOneAndUpdate({ _id: id }, { $set: { comment } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    res.redirect(`/user/post/${id}`)
+}

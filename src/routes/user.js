@@ -69,5 +69,6 @@ router.post('/resetPassword/:id/:token', authController.resetPassword)
 router.post('/rate/:id', requireAuth, authController.ratings_post)
 
 router.post('/search', authController.search_post)
-
+router.get('/post/:id', authController.post_get)
+router.post('/comment/:id',requireAuth ,authController.comment_post)
 module.exports = router
