@@ -393,6 +393,25 @@ module.exports.search_post = async (req, res) => {
     })
 }
 
+module.exports.myDeals_get = async (req, res) => {
+    const document = await Document.find({user:req.user._id})
+   
+    console.log(document)
+    const token=req.cookies.jwt
+    var isLoggedIn=false
+    if(token){
+        isLoggedIn=true
+    }
+    res.render('./userViews/myDeals',{
+        isLoggedIn,
+        document
+    })
+}
+module.exports.delete_get = async (req, res) => {
+    const id=req.params.id
+    const document = await Document.findOneAndDelete({ _id: id })
+    res.redirect('/user/deals')
+}
 module.exports.comment_post = async (req, res) => {
     const id = req.params.id
     const com=req.body.comment

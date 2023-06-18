@@ -70,5 +70,7 @@ router.post('/rate/:id', requireAuth, authController.ratings_post)
 
 router.post('/search', authController.search_post)
 router.get('/post/:id', authController.post_get)
+router.get('/deals',requireAuth, authController.myDeals_get)
+router.get('/delete/:id',requireAuth, authController.delete_get)
 router.post('/comment/:id',requireAuth ,authController.comment_post)
 module.exports = router
