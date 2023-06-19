@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="/assets/css/message.css" />
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <%for(var i=1;i<sender.length+1; i++){%>
+        <li style="--i: <%=sender.length+1-i%>;">
+            <div class="content">
+                <a href="/user/chat/<%=sender[i-1].senderId%>/<%=sender[i-1].postId%>"><h3><%=sender[i-1].name%></h3></a>
+            </div>
+        </li>
+        <%}%>
+        
+    </ul>
+</body>
+</html>

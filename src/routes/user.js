@@ -69,8 +69,11 @@ router.post('/resetPassword/:id/:token', authController.resetPassword)
 router.post('/rate/:id', requireAuth, authController.ratings_post)
 
 router.post('/search', authController.search_post)
-router.get('/post/:id', authController.post_get)
+router.get('/post/:id',requireAuth, authController.post_get)
 router.get('/deals',requireAuth, authController.myDeals_get)
 router.get('/delete/:id',requireAuth, authController.delete_get)
 router.post('/comment/:id',requireAuth ,authController.comment_post)
+router.get('/chat/:id/:postId',requireAuth, authController.chat_get)
+router.post('/chat/:id/:postId',requireAuth, authController.chat_post)
+router.get('/message/:id',requireAuth, authController.users_get)
 module.exports = router

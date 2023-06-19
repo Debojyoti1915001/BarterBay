@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Document = require('../models/Document')
 const Comment = require('../models/Comment')
+const Chat = require('../models/Chat')
 const jwt = require('jsonwebtoken')
 const { signupMail, passwordMail } = require('../config/nodemailer')
 const path = require('path')
@@ -203,10 +204,17 @@ module.exports.post_get = async (req, res) => {
     const id=req.params.id
     const _post=await Document.findOne({ _id: id})
     const post=await _post.populate('comment').execPopulate()
-    console.log(post)
+    
+    const user=req.user
+    var isUser=false
+    if(String(post.user)==String(user._id)){
+        isUser=true
+    }
     res.render('./userViews/post',
     {
-        post
+        post,
+        user,
+        isUser
     }
     )
     // console.log('in profile page')
@@ -431,4 +439,79 @@ module.exports.comment_post = async (req, res) => {
         }
     });
     res.redirect(`/user/post/${id}`)
+}
+
+module.exports. chat_get = async (req, res) => {
+    const id=req.params.id
+    const postId=req.params.postId
+    const chat1=await Chat.find({sender:req.user._id,reciever:id,document:postId})
+    const chat2=await Chat.find({sender:id,reciever:req.user._id,document:postId})
+    var chat=[]
+    for(var i of chat1){
+        var chat3=await i.populate('sender').execPopulate()
+        var _chat=await chat3.populate('reciever').execPopulate()
+        var cur;
+        
+            cur={
+                message:_chat.message,
+                sender:_chat.sender.name,
+                reciever:_chat.reciever.name,
+                time:_chat.time,
+                class:"replied"
+            }
+        chat.push(cur)
+    }
+    for(var i of chat2){
+        var chat3=await i.populate('sender').execPopulate()
+        var _chat=await chat3.populate('reciever').execPopulate()
+        var cur;
+        
+            cur={
+                message:_chat.message,
+                sender:_chat.sender.name,
+                reciever:_chat.reciever.name,
+                time:_chat.time,
+                class:""
+            }
+        chat.push(cur)
+    }
+    chat.sort((a,b) => (a.time > b.time) ? 1 : ((b.time > a.time) ? -1 : 0))
+    // console.log(chat)
+    res.render('./userViews/chat',{
+        id,
+        postId,
+        chat
+    })
+}
+module.exports.chat_post = async (req, res) => {
+    const id=req.params.id
+    const postId=req.params.postId
+    const message=req.body.message
+    const reciever=await User.findOne({_id:id})
+    const sender=req.user
+    const chat = new Chat({ message ,reciever,sender,time:Date.now(),document:postId})
+    let saveChat = await chat.save()
+    // console.log(saveChat)
+    res.redirect(`/user/chat/${id}/${postId}`)
+}
+module.exports.users_get = async (req, res) => {
+    const id=req.params.id
+    const chat=await Chat.find({document:id})
+    var senders=[]
+    for(var i of chat){
+        const _chat=await i.populate('sender').execPopulate()
+        if(String(_chat.sender._id)!=String(req.user._id))
+        senders.push({name:_chat.sender.name,senderId:_chat.sender._id,postId:id})
+    }    
+    const sender = senders.reduce((accumulator, current) => {
+        if (!accumulator.find((item) => String(item.senderId) === String(current.senderId))) {
+          accumulator.push(current);
+        }
+        return accumulator;
+      }, []);
+      
+    console.log(sender)
+    res.render('./userViews/message',{
+        sender
+    })
 }
