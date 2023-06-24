@@ -207,6 +207,7 @@ module.exports.post_get = async (req, res) => {
     if(String(post1.user)==String(user._id)){
         isUser=true
     }
+    
     const post=await post1.populate('deals').execPopulate()
     
     console.log(post)

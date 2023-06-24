@@ -10,7 +10,7 @@ body {
     place-content: center;
     min-height: 100vh;
     background: black;
-    background: linear-gradient(45deg, #6407a1, black);
+    background: linear-gradient(45deg, #f48840, black);
 }
 
 ul {
