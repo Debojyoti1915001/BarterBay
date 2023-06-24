@@ -9,12 +9,7 @@ require('dotenv').config()
 const userSchema = mongoose.Schema(
     {
         
-        short_id: 
-        {
-            type: String, 
-            trim:true, 
-            required: [true, 'Short ID cannot be absent']
-        },
+        
         score: {
             type: Number,
             trim: true,
@@ -55,12 +50,6 @@ const userSchema = mongoose.Schema(
                 },
                 'The password must contain a mix of uppercase and lowercase alphabets along with numbers and special chacracters',
             ],
-        },
-        phoneNumber: {
-            required: [true, 'Phone number field cannot be empty'],
-            type: String,
-            trim: true,
-            validate: [utilities.phoneValidator, 'Phone number is invalid'],
         },
         address:{
             type:String

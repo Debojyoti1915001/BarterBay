@@ -296,12 +296,18 @@ https://templatemo.com/tm-551-stand-blog
                       <div class="content">
                         <ul>
                           <% for(var i of post.deals){ %>
-                          <li>
-                            <div class="right-content">
-                              <h4><%=i.name%></h4>
-                              <p><%=i.desc%>.</p>
-                            </div>
-                          </li>
+                            <li>
+                              <div class="author-thumb">
+                                <img src="<%=i.url%>" alt="">
+                              </div>
+                              <div class="right-content">
+                                <h4><%=i.name%></h4>
+                                <p><%=i.desc%>.</p> 
+                                <a href="/user/chat/<%=i.user%>/<%=i._id%>">Chat</a>
+                                <a href="/user/accept/<%=post._id%>/<%=i._id%>">Accept</a>
+                              </div>
+                            </li>
+                          
                           <br>
                           <% } %>
                           

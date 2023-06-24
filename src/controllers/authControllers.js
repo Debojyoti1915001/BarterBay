@@ -33,7 +33,7 @@ module.exports.login_get = (req, res) => {
 }
 
 module.exports.signup_post = async (req, res) => {
-    const { name, email, password, confirmPwd, phoneNumber } = req.body
+    const { name, email, password, confirmPwd } = req.body
 
     const nominee = null
     console.log('in sign up route', req.body)
@@ -60,15 +60,12 @@ module.exports.signup_post = async (req, res) => {
             )
             return res.redirect('/user/login')
         }
-        const short_id = generateShortId(name, phoneNumber);
         // console.log('Short ID generated is: ', short_id)
         const user = new User({
             email,
             score:0,
             name,
             password,
-            phoneNumber,
-            short_id,
             nominee,
 
         })
@@ -187,7 +184,7 @@ module.exports.login_post = async (req, res) => {
         //signupMail(saveUser)
         // console.log("logged in")
         req.flash('success_msg', 'Successfully logged in')
-        res.status(200).redirect('/user/profile')
+        res.status(200).redirect('/')
     } catch (err) {
         req.flash('error_msg', 'Invalid Credentials')
         //console.log(err)
@@ -203,13 +200,21 @@ module.exports.profile_get = async (req, res) => {
 module.exports.post_get = async (req, res) => {
     const id=req.params.id
     const _post=await Document.findOne({ _id: id})
-    const post=await _post.populate('comment').execPopulate()
+    const post1=await _post.populate('comment').execPopulate()
     
     const user=req.user
     var isUser=false
-    if(String(post.user)==String(user._id)){
+    if(String(post1.user)==String(user._id)){
         isUser=true
     }
+    const post=await post1.populate('deals').execPopulate()
+    
+    console.log(post)
+    // await Document.findOneAndUpdate({ _id: post._id }, { $set: { deals:["649729c22f1b2c38ac2677fd"]} }, { new: true }, (err, doc) => {
+    //     if (err) {
+    //         res.redirect('/')
+    //     }
+    // });
     res.render('./userViews/post',
     {
         post,
@@ -351,7 +356,7 @@ module.exports.resetPassword = async (req, res) => {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: false,
             })
-            res.redirect('/user/profile')
+            res.redirect('/')
         }
     } catch (err) {
         res.send(err)
@@ -405,7 +410,13 @@ module.exports.search_post = async (req, res) => {
 }
 
 module.exports.myDeals_get = async (req, res) => {
-    const document = await Document.find({user:req.user._id})
+    var document 
+    const type=req.params.type
+    if(type=="false"){
+        document= await Document.find({user:req.user._id,active:false})
+    }else{
+        document= await Document.find({user:req.user._id,active:true})
+    }
    
     console.log(document)
     const token=req.cookies.jwt
@@ -531,15 +542,33 @@ module.exports.barter_post = async (req, res) => {
     const post=await Document.findOne({id:barterId,user:user._id,active:true})
     if(!post){
         console.log("post not available")
-        res.redirect(`/user/post/${postId}`)
+    }else{
+        const elsePost=await Document.findOne({_id:postId})
+        const deals=elsePost.deals
+        deals.push(post)
+        await Document.findOneAndUpdate({ _id:  postId}, { $set: { deals } }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
     }
-    const elsePost=await Document.findOne({_id:postId})
-    const deals=elsePost.deals
-    deals.push(post)
-    await Document.findOneAndUpdate({ _id:  postId}, { $set: { deals } }, { new: true }, (err, doc) => {
+    
+
+    res.redirect(`/user/post/${postId}`)
+}
+
+module.exports.accept_get = async (req, res) => {
+    const id1=req.params.id1
+    const id2=req.params.id2
+    await Document.findOneAndUpdate({ _id:  id1}, { $set: { active:false } }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }
     });
-    res.redirect(`/user/post/${postId}`)
+    await Document.findOneAndUpdate({ _id:  id2}, { $set: { active:false } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    res.redirect('/')
 }
