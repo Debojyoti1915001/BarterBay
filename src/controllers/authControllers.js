@@ -226,6 +226,7 @@ module.exports.post_get = async (req, res) => {
     // console.log('in profile page')
 }
 module.exports.createPost = async (req, res) => {
+   try{
     const { name, desc, tags,type } = req.body
     console.log(req.body)
     const picture = req.file.path
@@ -265,6 +266,9 @@ module.exports.createPost = async (req, res) => {
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
+   }catch(err){
+    console.log(err)
+   }
 }
 
 module.exports.logout_get = async (req, res) => {
