@@ -110,14 +110,14 @@ https://templatemo.com/tm-551-stand-blog
             <div class="main-content">
               <div class="row">
                 <div class="col-lg-8">
-                  <span>Stand Blog HTML5 Template</span>
-                  <h4>Creative HTML Template For Bloggers!</h4>
+                  <span>BarterBase</span>
+                  <h4>Exchange Things With Ease</h4>
                 </div>
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
                   <div class="main-button">
-                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
+                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent"></a>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ https://templatemo.com/tm-551-stand-blog
                         <% } %>
                       </ul>
                       <p><%= post.desc %></p>
-                      <div class="post-options">
+                      <!-- <div class="post-options">
                         <div class="row">
                           <div class="col-6">
                             <ul class="post-tags">
@@ -170,7 +170,7 @@ https://templatemo.com/tm-551-stand-blog
                             </ul>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div style="*{
                         margin: 0;
                         padding: 0;
@@ -335,12 +335,23 @@ https://templatemo.com/tm-551-stand-blog
               <div class="row">
                 <div class="col-lg-12">
                   <div class="sidebar-item search">
-                    <form id="search_form" name="gs" method="GET" action="#">
-                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
-                    </form>
+                    <form
+                                            action="/user/search"
+                                            id="search_form"
+                                            name="gs"
+                                            method="POST"
+                                        >
+                                            <input
+                                                type="text"
+                                                name="search"
+                                                class="searchText"
+                                                placeholder="type to search..."
+                                                autocomplete="on"
+                                            />
+                                        </form>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                   <div class="sidebar-item recent-posts">
                     <div class="sidebar-heading">
                       <h2>Recent Posts</h2>
@@ -397,7 +408,7 @@ https://templatemo.com/tm-551-stand-blog
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
