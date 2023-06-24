@@ -254,7 +254,13 @@ module.exports.createPost = async (req, res) => {
     });
     console.log(url)
     const random=String(Math.floor(Math.random() * 10000))
-    const id=name.replaceAll(/ /g,"_")+random
+    const name1=String(name)
+    for(var i=0;i<name1.length;i++){
+        if(name1[i]==' '){
+            name1[i]='_'
+        }
+    }
+    const id=name1+random
     const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray })
     let saveDocument = await document.save()
     console.log(saveDocument)
