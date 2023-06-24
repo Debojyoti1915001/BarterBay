@@ -74,7 +74,7 @@ app.listen(PORT, () => {
 })
 
 
-// const User = require('./models/User')
+// const User = require('./models/Document')
 //  const databasedlt= async()=>{
 //     const user = await User.find({})
 //     user.forEach(async(data)=>{

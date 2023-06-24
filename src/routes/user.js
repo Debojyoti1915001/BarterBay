@@ -76,4 +76,6 @@ router.post('/comment/:id',requireAuth ,authController.comment_post)
 router.get('/chat/:id/:postId',requireAuth, authController.chat_get)
 router.post('/chat/:id/:postId',requireAuth, authController.chat_post)
 router.get('/message/:id',requireAuth, authController.users_get)
+router.post('/barter/:id',requireAuth, authController.barter_post)
+
 module.exports = router

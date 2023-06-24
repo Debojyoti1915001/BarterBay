@@ -6,6 +6,14 @@ const documentSchema = mongoose.Schema({
         type: String,
         trim: true,
     },
+    id:{
+        type: String,
+        trim: true,
+    },
+    active: {
+        type: Boolean,
+        default:true,
+    },
     desc:{
         type: String,
         trim: true,
@@ -18,6 +26,10 @@ const documentSchema = mongoose.Schema({
         type: String,
         trim: true,
     },
+    deals:[{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'Document'
+    }],
     ratings:[
         {
             type:Number,

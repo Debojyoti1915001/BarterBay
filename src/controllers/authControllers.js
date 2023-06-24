@@ -9,7 +9,7 @@ const { handleErrors } = require('../utilities/Utilities')
 const crypto = require('crypto')
 require('dotenv').config()
 const { generateShortId } = require('../utilities/Utilities');
-
+const { v4: uuidv4 } = require('uuid');
 const maxAge = 30 * 24 * 60 * 60
 
 const cloudinary = require('cloudinary').v2
@@ -237,16 +237,19 @@ module.exports.createPost = async (req, res) => {
     if (cur.length) {
         tagsArray.push(cur)
     }
-    const result = await cloudinary.uploader.upload(picture, { public_id: "uploaded" })
+    const uniq="uploaded"+String(uuidv4())
+    const result = await cloudinary.uploader.upload(picture, { public_id: uniq })
     // console.log(result.secure_url)
 
-    const url = cloudinary.url("uploaded", {
+    const url = cloudinary.url(uniq, {
         width: 1500,
         height: 1000,
         Crop: 'fill'
     });
     console.log(url)
-    const document = new Document({ name, desc, type,url, user: req.user._id, tags: tagsArray })
+    const random=String(Math.floor(Math.random() * 10000))
+    const id=name.replaceAll(/ /g,"_")+random
+    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray })
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
@@ -375,7 +378,7 @@ module.exports.ratings_post = async (req, res) => {
 
 module.exports.search_post = async (req, res) => {
     const search = req.body.search
-    const allDocument = await Document.find({})
+    const allDocument = await Document.find({active:true})
     const document = []
         for (var i of allDocument) {
             var isPresent = false
@@ -417,7 +420,12 @@ module.exports.myDeals_get = async (req, res) => {
 }
 module.exports.delete_get = async (req, res) => {
     const id=req.params.id
-    const document = await Document.findOneAndDelete({ _id: id })
+    
+    await Document.findOneAndUpdate({ _id:  id}, { $set: { active:false } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
     res.redirect('/user/deals')
 }
 module.exports.comment_post = async (req, res) => {
@@ -514,4 +522,24 @@ module.exports.users_get = async (req, res) => {
     res.render('./userViews/message',{
         sender
     })
+}
+
+module.exports.barter_post = async (req, res) => {
+    const postId=req.params.id
+    const barterId=req.body.uniq
+    const user=req.user
+    const post=await Document.findOne({id:barterId,user:user._id,active:true})
+    if(!post){
+        console.log("post not available")
+        res.redirect(`/user/post/${postId}`)
+    }
+    const elsePost=await Document.findOne({_id:postId})
+    const deals=elsePost.deals
+    deals.push(post)
+    await Document.findOneAndUpdate({ _id:  postId}, { $set: { deals } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    res.redirect(`/user/post/${postId}`)
 }
