@@ -419,12 +419,40 @@ module.exports.search_post = async (req, res) => {
         document
     })
 }
+module.exports.tag_post = async (req, res) => {
+    const search = req.params.id
+    const allDocument = await Document.find({active:true})
+    const document = []
+        for (var i of allDocument) {
+            var isPresent = false
+            for (var j of i.tags) {
+                if (j == search) {
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (i.name == search || isPresent) {
+                document.push(i);
+            }
+        }
+    console.log(document)
+    const token=req.cookies.jwt
+    var isLoggedIn=false
+    if(token){
+        isLoggedIn=true
+    }
+    res.render('./userViews/searchPost',{
+        isLoggedIn,
+        document
+    })
+}
 
 module.exports.myDeals_get = async (req, res) => {
     var document 
     const type=req.params.type
     if(type=="false"){
-        document= await Document.find({user:req.user._id,active:false})
+        var document1= await Document.find({user:req.user._id,active:false})
+        document=await document1.populate('boughtBy').execPopulate()
     }else{
         document= await Document.find({user:req.user._id,active:true})
     }
@@ -436,8 +464,9 @@ module.exports.myDeals_get = async (req, res) => {
         isLoggedIn=true
     }
     res.render('./userViews/myDeals',{
+        type,
         isLoggedIn,
-        document
+        document,
     })
 }
 module.exports.delete_get = async (req, res) => {
@@ -571,12 +600,14 @@ module.exports.barter_post = async (req, res) => {
 module.exports.accept_get = async (req, res) => {
     const id1=req.params.id1
     const id2=req.params.id2
-    await Document.findOneAndUpdate({ _id:  id1}, { $set: { active:false } }, { new: true }, (err, doc) => {
+    const post1=await Document.findOne({_id:id1})
+    const post2=await Document.findOne({_id:id2})
+    await Document.findOneAndUpdate({ _id:  id1}, { $set: { active:false,boughtBy:post2.user } }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }
     });
-    await Document.findOneAndUpdate({ _id:  id2}, { $set: { active:false } }, { new: true }, (err, doc) => {
+    await Document.findOneAndUpdate({ _id:  id2}, { $set: { active:false ,boughtBy:post1.user} }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }

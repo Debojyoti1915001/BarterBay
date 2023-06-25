@@ -46,6 +46,10 @@ const documentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
     },
+    boughtBy:{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'User'
+    },
     comment:[{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'Comment'

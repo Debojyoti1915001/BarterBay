@@ -250,7 +250,9 @@
                                 </h4>
                             </div>
                             <div class="col-lg-4">
-
+                                <h4>
+                                    <%=document.length%> Post Available
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -287,7 +289,11 @@
 
                                             </p>
                                             <br>
-                                            <a href="/user/delete/<%=doc._id%>">Delete</a>
+                                            <%if(type=="true"){%>
+                                                <a href="/user/delete/<%=doc._id%>">Make It Inactive</a>
+                                            <%}else{%>
+                                                <p>Bought By <%=doc.user.name%></p>
+                                            <%}%>
                                             <form action="/user/rate/<%=doc._id%>" method="POST" class="rate">
                                                 <input type="radio" id="star5" name="rate" value="1" />
                                                 <label for="star5" title="text">★</label>
@@ -453,7 +459,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="col-lg-12">
                                     <div class="sidebar-item tags">
                                         <div class="sidebar-heading">
@@ -462,26 +468,26 @@
                                         <div class="content">
                                             <ul>
                                                 <li>
-                                                    <a href="#">Lifestyle</a>
+                                                    <a href="/user/search/Lifestyle">Lifestyle</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Creative</a>
+                                                    <a href="/user/search/Creative">Creative</a>
                                                 </li>
-                                                <li><a href="#">HTML5</a></li>
+                                                <li><a href="/user/search/Creative">Furniture</a></li>
                                                 <li>
-                                                    <a href="#">Inspiration</a>
+                                                    <a href="/user/search/Household">Household</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Motivation</a>
+                                                    <a href="/user/search/Vechile">Vechile</a>
                                                 </li>
-                                                <li><a href="#">PSD</a></li>
+                                                <li><a href="/user/search/Clothes">Clothes</a></li>
                                                 <li>
-                                                    <a href="#">Responsive</a>
+                                                    <a href="/user/search/Electronics">Electronics</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div> 
                         </div>
                     </div>
                 </div>

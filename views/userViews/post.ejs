@@ -138,21 +138,20 @@ https://templatemo.com/tm-551-stand-blog
                       <img src="<%=post.url%>" alt="">
                     </div>
                     <div class="down-content">
-                      <span>Lifestyle</span>
-                      <a href="#"><h4><%= post.name%></h4></a>
-                      <a href="#"><h4><%= post.id%></h4></a> 
-                      ------>
+                      <span><%= post.name%></span>
+                      <p>Unique Id : <%= post.id%></p>
+                      <ul class="post-info">
+                        <h4>Tags:</h4>
+                        <% for(var tag of post.tags){ %>
+                        <li><a href="/user/search/<%= tag %>"><%= tag %></a></li>
+                        <% } %>
+                      </ul>
+                      <p><%= post.desc %></p>
                       <%if(isUser){%>
                         <a href="/user/message/<%= post._id%>"><h4>See My chats</h4></a>
                       <%}else{%>
                         <a href="/user/chat/<%= post.user%>/<%= post._id%>"><h4>Chat With User</h4></a>
                       <%}%>
-                      <ul class="post-info">
-                        <% for(var tag of post.tags){ %>
-                        <li><a href="#"><%= tag %></a></li>
-                        <% } %>
-                      </ul>
-                      <p><%= post.desc %></p>
                       <!-- <div class="post-options">
                         <div class="row">
                           <div class="col-6">
@@ -390,7 +389,7 @@ https://templatemo.com/tm-551-stand-blog
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div>-->
                 <div class="col-lg-12">
                   <div class="sidebar-item tags">
                     <div class="sidebar-heading">
@@ -398,17 +397,27 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
+                        <li>
+                          <a href="/user/search/Lifestyle">Lifestyle</a>
+                      </li>
+                      <li>
+                          <a href="/user/search/Creative">Creative</a>
+                      </li>
+                      <li><a href="/user/search/Creative">Furniture</a></li>
+                      <li>
+                          <a href="/user/search/Household">Household</a>
+                      </li>
+                      <li>
+                          <a href="/user/search/Vechile">Vechile</a>
+                      </li>
+                      <li><a href="/user/search/Clothes">Clothes</a></li>
+                      <li>
+                          <a href="/user/search/Electronics">Electronics</a>
+                      </li>
                       </ul>
                     </div>
                   </div>
-                </div> -->
+                </div> 
               </div>
             </div>
           </div>

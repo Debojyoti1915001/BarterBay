@@ -69,6 +69,7 @@ router.post('/resetPassword/:id/:token', authController.resetPassword)
 router.post('/rate/:id', requireAuth, authController.ratings_post)
 
 router.post('/search', authController.search_post)
+router.get('/search/:id', authController.tag_post)
 router.get('/post/:id',requireAuth, authController.post_get)
 router.get('/deals/:type',requireAuth, authController.myDeals_get)
 router.get('/delete/:id',requireAuth, authController.delete_get)
