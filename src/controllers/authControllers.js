@@ -455,6 +455,7 @@ module.exports.myDeals_get = async (req, res) => {
         for(var i of document1){
             var cur=await i.populate('boughtBy').execPopulate()    
             document.push(cur)
+            console.log(cur)
         }
         
     }else{

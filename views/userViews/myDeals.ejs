@@ -292,7 +292,15 @@
                                             <%if(type=="true"){%>
                                                 <a href="/user/delete/<%=doc._id%>">Make It Inactive</a>
                                             <%}else{%>
-                                                <p>Bought By <%=doc.user.name%></p>
+                                                
+                                                <p> 
+                                                    <%if(doc.boughtBy){%> 
+                                                        Bought By
+                                                        <%=doc.boughtBy.name%>
+                                                    <% }else{ %>
+                                                        NOT SOLD
+                                                    <% } %>
+                                                </p>
                                             <%}%>
                                             <form action="/user/rate/<%=doc._id%>" method="POST" class="rate">
                                                 <input type="radio" id="star5" name="rate" value="1" />
