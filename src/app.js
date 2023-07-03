@@ -74,15 +74,6 @@ app.listen(PORT, () => {
 })
 
 
-// const User = require('./models/Comment')
-//  const databasedlt= async()=>{
-//     const user = await User.find({})
-//     user.forEach(async(data)=>{
-//          await User.findByIdAndDelete(data._id)
-//     })
-//     console.log("deleted")
-//  }
-//  databasedlt()
 
 
 //  const User= require('./models/Relations')

@@ -448,11 +448,15 @@ module.exports.tag_post = async (req, res) => {
 }
 
 module.exports.myDeals_get = async (req, res) => {
-    var document 
+    var document=[]
     const type=req.params.type
     if(type=="false"){
         var document1= await Document.find({user:req.user._id,active:false})
-        document=await document1.populate('boughtBy').execPopulate()
+        for(var i of document1){
+            var cur=await i.populate('boughtBy').execPopulate()    
+            document.push(cur)
+        }
+        
     }else{
         document= await Document.find({user:req.user._id,active:true})
     }
