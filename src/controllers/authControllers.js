@@ -619,3 +619,10 @@ module.exports.accept_get = async (req, res) => {
     });
     res.redirect('/')
 }
+module.exports.user_get = async (req, res) => {
+   const user=req.user
+
+    res.render('./userViews/profile',{
+        user
+    })
+}

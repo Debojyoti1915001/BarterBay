@@ -56,7 +56,6 @@ router.post('/signup', authController.signup_post)
 router.get('/login', redirectIfLoggedIn, authController.login_get)
 router.post('/login', authController.login_post)
 router.get('/logout', requireAuth, authController.logout_get)
-router.get('/profile', requireAuth, authController.profile_get)
 
 router.post('/createPost', requireAuth, upload.single('photo'), authController.createPost)
 
@@ -79,4 +78,5 @@ router.post('/chat/:id/:postId',requireAuth, authController.chat_post)
 router.get('/message/:id',requireAuth, authController.users_get)
 router.post('/barter/:id',requireAuth, authController.barter_post)
 router.get('/accept/:id1/:id2',requireAuth, authController.accept_get)
+router.get('/profile',requireAuth, authController.user_get)
 module.exports = router
