@@ -13,7 +13,7 @@
     <title>BarterBase</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="/assets/css/fontawesome.css" />
@@ -93,6 +93,104 @@ https://templatemo.com/tm-551-stand-blog
             </div>
         </nav>
     </header>
+    <div class="slidemain">
+        <section class="cd-slider">
+          <ul>
+            <li data-color="#FF384B">
+              <div class="content" style="background-image:url(https://5.imimg.com/data5/SELLER/Default/2020/10/XJ/NO/BT/68434442/bedroom-furniture.jpg)">
+                <blockquote>
+                  <p>Want to exchange your Furniture.</p>
+                  <br>
+                  <span>Search Here!!</span>
+                  <div class="sidebar-item search">
+                    <form
+                            action="/user/search"
+                            id="search_form"
+                            name="gs"
+                            method="POST"
+                            
+                        >
+                            <input
+                                type="text"
+                                name="search"
+                                class="searchText"
+                                placeholder="Type to search..."
+                                autocomplete="on"
+                            />
+                        </form>
+                </div>
+                  <span>Post Here!!</span>
+                  <br>
+                  <input type="submit" id="btn" value="Post" />
+                </blockquote>
+              </div>
+            </li>
+            <li data-color="#FF9C00">
+                <div class="content" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlG396aa7iDkZ6UlaIJKoxYdMtC3p1zKQ5GA&usqp=CAU)">
+                    <blockquote>
+                      <p>Want to exchange your Electronics.</p>
+                      <br>
+                      <span>Search Here!!</span>
+                      <div class="sidebar-item search">
+                        <form
+                                action="/user/search"
+                                id="search_form"
+                                name="gs"
+                                method="POST"
+                                
+                            >
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="searchText"
+                                    placeholder="Type to search..."
+                                    autocomplete="on"
+                                />
+                            </form>
+                    </div>
+                      <span>Post Here!!</span>
+                      <br>
+                      <input type="submit" id="btn" value="Post" />
+                    </blockquote>
+                  </div>
+            </li>
+            <li data-color="#002AFF">
+                <div class="content" style="background-image:url(https://cars.tatamotors.com/images/performance-mobile-new.jpg)">
+                    <blockquote>
+                      <p>Want to exchange your Car.</p>
+                      <br>
+                      <span>Search Here!!</span>
+                      <div class="sidebar-item search">
+                        <form
+                                action="/user/search"
+                                id="search_form"
+                                name="gs"
+                                method="POST"
+                                
+                            >
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="searchText"
+                                    placeholder="Type to search..."
+                                    autocomplete="on"
+                                />
+                            </form>
+                    </div>
+                      <span>Post Here!!</span>
+                      <br>
+                      <input type="submit" id="btn" value="Post" />
+                    </blockquote>
+                  </div>
+            </li>
+          </ul>
+          <nav>
+            <div><a class="prev" href="#"></a></div>
+            <div><a class="next" href="#"></a></div>
+          </nav>
+        </section>
+        </div>
+
     <!-- Modal -->
     <div class="modal" id="modal">
         <!-- Modal background -->
@@ -146,6 +244,7 @@ https://templatemo.com/tm-551-stand-blog
     </div>
     <!-- Page Content -->
     <!-- Banner Starts Here -->
+    
     <div class="main-banner header-text">
         <div class="container-fluid">
             <div class="owl-banner owl-carousel">
@@ -294,7 +393,7 @@ https://templatemo.com/tm-551-stand-blog
         <div class="text">
             <img src="/assets/images/img.png" />
             <textarea placeholder="What's in your mind"></textarea>
-            <input type="submit" value="post" />
+            <input type="submit" value="Post" />
         </div>
     </section>
     
@@ -545,7 +644,138 @@ https://templatemo.com/tm-551-stand-blog
     <script src="/assets/js/slick.js"></script>
     <script src="/assets/js/isotope.js"></script>
     <script src="/assets/js/accordions.js"></script>
+<script>
+    (function() {
+  
+  var autoUpdate = false,
+      timeTrans = 4000;
+  
+	var cdSlider = document.querySelector('.cd-slider'),
+		item = cdSlider.querySelectorAll("li"),
+		nav = cdSlider.querySelector("nav");
 
+	item[0].className = "current_slide";
+
+	for (var i = 0, len = item.length; i < len; i++) {
+		var color = item[i].getAttribute("data-color");
+		item[i].style.backgroundColor=color;
+	}
+
+	// Detect IE
+	// hide ripple effect on IE9
+	var ua = window.navigator.userAgent;
+		var msie = ua.indexOf("MSIE");
+		if ( msie > 0 ) {
+			var version = parseInt(ua.substring(msie+ 5, ua.indexOf(".", msie)));
+			if (version === 9) { cdSlider.className = "cd-slider ie9";}
+	}
+
+	if (item.length <= 1) {
+		nav.style.display = "none";
+	}
+
+	function prevSlide() {
+		var currentSlide = cdSlider.querySelector("li.current_slide"),
+			prevElement = currentSlide.previousElementSibling,
+			prevSlide = ( prevElement !== null) ? prevElement : item[item.length-1],
+			prevColor = prevSlide.getAttribute("data-color"),
+			el = document.createElement('span');
+
+		currentSlide.className = "";
+		prevSlide.className = "current_slide";
+
+		nav.children[0].appendChild(el);
+
+		var size = ( cdSlider.clientWidth >= cdSlider.clientHeight ) ? cdSlider.clientWidth*2 : cdSlider.clientHeight*2,
+		    ripple = nav.children[0].querySelector("span");
+
+		ripple.style.height = size + 'px';
+		ripple.style.width = size + 'px';
+		ripple.style.backgroundColor = prevColor;
+
+		ripple.addEventListener("webkitTransitionEnd", function() {
+			if (this.parentNode) {
+				this.parentNode.removeChild(this);
+			}
+		});
+
+		ripple.addEventListener("transitionend", function() {
+			if (this.parentNode) {
+				this.parentNode.removeChild(this);
+			}
+		});
+
+	}
+
+	function nextSlide() {
+		var currentSlide = cdSlider.querySelector("li.current_slide"),
+			nextElement = currentSlide.nextElementSibling,
+			nextSlide = ( nextElement !== null ) ? nextElement : item[0],
+			nextColor = nextSlide.getAttribute("data-color"),
+			el = document.createElement('span');
+
+		currentSlide.className = "";
+		nextSlide.className = "current_slide";
+
+		nav.children[1].appendChild(el);
+
+		var size = ( cdSlider.clientWidth >= cdSlider.clientHeight ) ? cdSlider.clientWidth*2 : cdSlider.clientHeight*2,
+			  ripple = nav.children[1].querySelector("span");
+
+		ripple.style.height = size + 'px';
+		ripple.style.width = size + 'px';
+		ripple.style.backgroundColor = nextColor;
+
+		ripple.addEventListener("webkitTransitionEnd", function() {
+			if (this.parentNode) {
+				this.parentNode.removeChild(this);
+			}
+		});
+
+		ripple.addEventListener("transitionend", function() {
+			if (this.parentNode) {
+				this.parentNode.removeChild(this);
+			}
+		});
+
+	}
+
+	updateNavColor();
+
+	function updateNavColor () {
+		var currentSlide = cdSlider.querySelector("li.current_slide");
+
+		var nextColor = ( currentSlide.nextElementSibling !== null ) ? currentSlide.nextElementSibling.getAttribute("data-color") : item[0].getAttribute("data-color");
+		var	prevColor = ( currentSlide.previousElementSibling !== null ) ? currentSlide.previousElementSibling.getAttribute("data-color") : item[item.length-1].getAttribute("data-color");
+
+		if (item.length > 2) {
+			nav.querySelector(".prev").style.backgroundColor = prevColor;
+			nav.querySelector(".next").style.backgroundColor = nextColor;
+		}
+	}
+
+	nav.querySelector(".next").addEventListener('click', function(event) {
+		event.preventDefault();
+		nextSlide();
+		updateNavColor();
+	});
+
+	nav.querySelector(".prev").addEventListener("click", function(event) {
+		event.preventDefault();
+		prevSlide();
+		updateNavColor();
+	});
+  
+  //autoUpdate
+  setInterval(function() {
+    if (autoUpdate) {
+      nextSlide();
+      updateNavColor();
+    };
+	},timeTrans);
+
+})();
+</script>
     <script language="text/Javascript">
         cleared[0] = cleared[1] = cleared[2] = 0 //set a cleared flag for each field
         function clearField(t) {
