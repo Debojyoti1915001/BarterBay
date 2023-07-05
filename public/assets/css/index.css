@@ -210,6 +210,7 @@
     font-size: 1.2rem;
     border-radius: 2px;
     cursor: pointer;
+    margin-left: 90%;
   }
   .modal .modal-container .modal-top :nth-child(2) {
     font-size: 1.5rem;
@@ -217,7 +218,7 @@
     cursor: pointer;
   }
   .modal .modal-container .modal-body {
-    margin: 3rem 0 2rem 0;
+    margin: 0rem 0 0rem 0;
   }
   .modal .modal-container .modal-body h2 {
     font-size: 1.2rem;

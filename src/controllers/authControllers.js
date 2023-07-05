@@ -227,7 +227,7 @@ module.exports.post_get = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
    try{
-    const { name, desc, tags,type } = req.body
+    const { name, desc, tags,type,score } = req.body
     console.log(req.body)
     const picture = req.file.path
     const tagsArray = []
@@ -262,7 +262,7 @@ module.exports.createPost = async (req, res) => {
         }
     }
     const id=name1+random
-    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray })
+    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray ,score})
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
@@ -626,3 +626,23 @@ module.exports.user_get = async (req, res) => {
         user
     })
 }
+
+module.exports.buy_get = async (req, res) => {
+    const user=req.user
+    const id=req.params.id
+    const post=await Document.findOne({_id:id})
+    if(user.score>post.score||user.score==post.score){
+        const score=(user.score-post.score)
+        await Document.findOneAndUpdate({ _id:  id}, { $set: { active:false ,boughtBy:user._id} }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
+        await User.findOneAndUpdate({ _id:  user._id}, { $set: { score} }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
+    }
+    res.redirect('/user/profile')
+ }

@@ -53,7 +53,12 @@ const documentSchema = mongoose.Schema({
     comment:[{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'Comment'
-    }]
+    }],
+    score: {
+        type: Number,
+        trim: true,
+        default:0
+    },
 })
 
 /*diseaseSchema.virtual('owner',{

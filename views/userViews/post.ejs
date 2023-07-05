@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/assets/css/fontawesome.css">
     <link rel="stylesheet" href="/assets/css/templatemo-stand-blog.css">
     <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
 <!--
 
 TemplateMo 551 Stand Blog
@@ -154,6 +155,33 @@ https://templatemo.com/tm-551-stand-blog
                       <%if(isUser){%>
                         <a href="/user/message/<%= post._id%>"><h4>See My chats</h4></a>
                       <%}else{%>
+                        <div class="modal" id="modal">
+                          <!-- Modal background -->
+                          <div class="bg"></div>
+                          <div class="modal-container" style="width: 60%;">
+                              
+                              <div class="modal-top">
+                                  <span class="close" id="close">&times;</span>
+                              </div>
+                              <%if(user.score>post.score||user.score==post.score){%>
+                                  <div class="modal-form" style="padding-bottom: 5px;">
+                                      <h3>Are You Sure You Wanna Buy <%= post.name%> with <%= post.score%> Trade Credits</h3>    
+                                  </div>
+                                  <div class="modal-form" style="padding-bottom: 5px;">
+                                    <h3>Your Current Trade Credits: <%=user.score%></h3>    
+                                  </div>
+                                  <div class="cta">
+                                     <a href="/user/buy/<%= post._id%>"> <button >Submit</button></a>
+                                  </div>
+                              <%}else{%>
+                                <div class="modal-form" style="padding-bottom: 5px;">
+                                  <h3>Not Enought Trade Credits</h3>    
+                              </div>
+                                <%}%>
+                          </div>
+                      </div>
+                        <button type="submit" id="btn"><h4>Buy with <%= post.score%> Trade Credits</h4></button>
+                        <br>
                         <a href="/user/chat/<%= post.user%>/<%= post._id%>"><h4>Chat With User</h4></a>
                       <%}%>
                       <!-- <div class="post-options">
@@ -475,7 +503,29 @@ https://templatemo.com/tm-551-stand-blog
           }
       }
     </script>
+<script>
+  // Event listeners
 
+  const btn = document.getElementById('btn')
+  const modal = document.getElementById('modal')
+  const close = document.getElementById('close')
+
+  // Event listeners
+  btn.addEventListener('click', () => {
+      modal.style.display = 'inline-block'
+      modal.className = 'modal animate__animated animate__bounceIn'
+  })
+
+  close.addEventListener('click', () => {
+      modal.style.display = 'none'
+  })
+
+  window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+          modal.style.display = 'none'
+      }
+  })
+</script>
 
   </body>
 

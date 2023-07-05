@@ -199,20 +199,17 @@ https://templatemo.com/tm-551-stand-blog
         <!-- Modal background -->
         <div class="bg"></div>
         <div class="modal-container" style="width: 60%;">
+            
             <div class="modal-top">
-
-                <i class="fas fa-times" id="close"> Close</i>
+                <span class="close" id="close">&times;</span>
             </div>
-            <div class="modal-body">
-                <h1>Create a post</h1>
-            </div>
-
             <form action="/user/createPost" method="POST" enctype="multipart/form-data">
                 <div class="modal-form" style="padding-bottom: 5px;">
                     <h3>What do you want to barter today?</h3>
+                    
                     <input type="text" name="name" placeholder="Name" />
                     <input type="textarea" name="tags" placeholder="Tags" />
-
+                    <input type="number" name="score" placeholder="Score" />
                 </div>
                 <div class="modal-form">
 
