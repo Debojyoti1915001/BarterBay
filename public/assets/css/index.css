@@ -270,7 +270,7 @@
 }
 
 /* Media query for even smaller screens */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 650px) {
   .model {
     width: 100%;
     height: auto;
@@ -288,7 +288,7 @@
     z-index: -1;
   }
   .modal .modal-container {
-    padding: 3rem 0rem;
+    padding: 0rem 1rem;
     background-color: #fff;
     width: 100%;
     position: absolute;
@@ -309,6 +309,7 @@
     font-size: 0.6rem;
     border-radius: 2px;
     cursor: pointer;
+    margin-left: 80%;
   }
   .modal .modal-container .modal-top :nth-child(2) {
     font-size: 1.5rem;
@@ -364,7 +365,9 @@
     color: #000;
     background-color: transparent;
   }
-  
+  #profilePic{
+    width: 10rem;
+  }
 }
 
 
@@ -386,7 +389,7 @@
     z-index: -1;
   }
   .modal .modal-container {
-    padding: 3rem 0rem;
+    padding: 0rem 1rem;
     background-color: #fff;
     width: 100%;
     position: absolute;
@@ -461,6 +464,9 @@
     background-color: #ff6363;
     color: #000;
     background-color: transparent;
+  }
+  #profilePic{
+    width: 9rem;
   }
 }
 
