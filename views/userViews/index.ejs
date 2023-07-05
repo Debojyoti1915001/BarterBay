@@ -124,7 +124,8 @@ https://templatemo.com/tm-551-stand-blog
                 </div>
                   <span>Post Here!!</span>
                   <br>
-                  <input type="submit" id="btn" value="Post" />
+                  <input type="submit" id="btn1" value="Post" />
+                 
                 </blockquote>
               </div>
             </li>
@@ -153,7 +154,7 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                       <span>Post Here!!</span>
                       <br>
-                      <input type="submit" id="btn" value="Post" />
+                      <input type="submit" id="btn2" value="Post" />
                     </blockquote>
                   </div>
             </li>
@@ -182,7 +183,7 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                       <span>Post Here!!</span>
                       <br>
-                      <input type="submit" id="btn" value="Post" />
+                      <input type="submit" id="btn3" value="Post" />
                     </blockquote>
                   </div>
             </li>
@@ -202,6 +203,147 @@ https://templatemo.com/tm-551-stand-blog
             
             <div class="modal-top">
                 <span class="close" id="close">&times;</span>
+            </div>
+            <form action="/user/createPost" method="POST" enctype="multipart/form-data">
+                <div class="modal-form" style="padding-bottom: 5px;">
+                    <h3>What do you want to barter today?</h3>
+                    
+                    <input type="text" name="name" placeholder="Name" />
+                    <input type="textarea" name="tags" placeholder="Tags" />
+                    <input type="number" name="score" placeholder="Score" />
+                </div>
+                <div class="modal-form">
+
+                    <textarea id="w3review" type="textarea" name="desc" rows="4" cols="50"
+                        style="background-color: rgb(253, 253, 253); border: 1px solid #1111;"> Write Your Description Here !
+                    
+                    </textarea>
+                    <div class="modal-form">
+                        <label for="type">Choose Type</label>
+
+                        <select name="type" id="type"
+                            style="background-color: rgb(255, 255, 255); border: 1px solid #1111;">
+                            <option value="group" name="type">Business Barter</option>
+                            <option value="single" name="type">Individual Barter</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="img" class="modal-form">Select image:</label>
+                <div class="input-group">
+                    <span class="input-group-btn" style="width: 50%;">
+                        <span class=" btn-default btn-file">
+                            Browse… <input type="file" id="profilePic" name="photo" width="50%"
+                                style="background-color: aliceblue; border: 1px solid #1111;">
+                        </span>
+                    </span>
+                </div>
+                <div class="cta">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="modal1">
+        <!-- Modal background -->
+        <div class="bg"></div>
+        <div class="modal-container" style="width: 60%;">
+            
+            <div class="modal-top">
+                <span class="close" id="close1">&times;</span>
+            </div>
+            <form action="/user/createPost" method="POST" enctype="multipart/form-data">
+                <div class="modal-form" style="padding-bottom: 5px;">
+                    <h3>What do you want to barter today?</h3>
+                    
+                    <input type="text" name="name" placeholder="Name" />
+                    <input type="textarea" name="tags" placeholder="Tags" />
+                    <input type="number" name="score" placeholder="Score" />
+                </div>
+                <div class="modal-form">
+
+                    <textarea id="w3review" type="textarea" name="desc" rows="4" cols="50"
+                        style="background-color: rgb(253, 253, 253); border: 1px solid #1111;"> Write Your Description Here !
+                    
+                    </textarea>
+                    <div class="modal-form">
+                        <label for="type">Choose Type</label>
+
+                        <select name="type" id="type"
+                            style="background-color: rgb(255, 255, 255); border: 1px solid #1111;">
+                            <option value="group" name="type">Business Barter</option>
+                            <option value="single" name="type">Individual Barter</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="img" class="modal-form">Select image:</label>
+                <div class="input-group">
+                    <span class="input-group-btn" style="width: 50%;">
+                        <span class=" btn-default btn-file">
+                            Browse… <input type="file" id="profilePic" name="photo" width="50%"
+                                style="background-color: aliceblue; border: 1px solid #1111;">
+                        </span>
+                    </span>
+                </div>
+                <div class="cta">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="modal2">
+        <!-- Modal background -->
+        <div class="bg"></div>
+        <div class="modal-container" style="width: 60%;">
+            
+            <div class="modal-top">
+                <span class="close" id="close2">&times;</span>
+            </div>
+            <form action="/user/createPost" method="POST" enctype="multipart/form-data">
+                <div class="modal-form" style="padding-bottom: 5px;">
+                    <h3>What do you want to barter today?</h3>
+                    
+                    <input type="text" name="name" placeholder="Name" />
+                    <input type="textarea" name="tags" placeholder="Tags" />
+                    <input type="number" name="score" placeholder="Score" />
+                </div>
+                <div class="modal-form">
+
+                    <textarea id="w3review" type="textarea" name="desc" rows="4" cols="50"
+                        style="background-color: rgb(253, 253, 253); border: 1px solid #1111;"> Write Your Description Here !
+                    
+                    </textarea>
+                    <div class="modal-form">
+                        <label for="type">Choose Type</label>
+
+                        <select name="type" id="type"
+                            style="background-color: rgb(255, 255, 255); border: 1px solid #1111;">
+                            <option value="group" name="type">Business Barter</option>
+                            <option value="single" name="type">Individual Barter</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="img" class="modal-form">Select image:</label>
+                <div class="input-group">
+                    <span class="input-group-btn" style="width: 50%;">
+                        <span class=" btn-default btn-file">
+                            Browse… <input type="file" id="profilePic" name="photo" width="50%"
+                                style="background-color: aliceblue; border: 1px solid #1111;">
+                        </span>
+                    </span>
+                </div>
+                <div class="cta">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="modal3">
+        <!-- Modal background -->
+        <div class="bg"></div>
+        <div class="modal-container" style="width: 60%;">
+            
+            <div class="modal-top">
+                <span class="close" id="close3">&times;</span>
             </div>
             <form action="/user/createPost" method="POST" enctype="multipart/form-data">
                 <div class="modal-form" style="padding-bottom: 5px;">
@@ -389,11 +531,11 @@ https://templatemo.com/tm-551-stand-blog
             </div>
         </div>
     </section>
-    <section class="sec" id="btn">
-        <div class="text">
+    <section id="btn" class="sec" >
+        <div id="btn" class="text">
             <img src="/assets/images/img.png" />
-            <textarea placeholder="What's in your mind"></textarea>
-            <input type="submit" value="Post" />
+            <textarea id="btn" placeholder="What's in your mind"></textarea>
+            <input id="btn" type="submit" value="Post" />
         </div>
     </section>
     
@@ -819,6 +961,75 @@ https://templatemo.com/tm-551-stand-blog
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none'
+            }
+        })
+    </script>
+    <script>
+        // Event listeners
+
+        const btn1 = document.getElementById('btn1')
+        const modal1 = document.getElementById('modal1')
+        const close1 = document.getElementById('close1')
+
+        // Event listeners
+        btn1.addEventListener('click', () => {
+            modal1.style.display = 'inline-block'
+            modal1.className = 'modal animate__animated animate__bounceIn'
+        })
+
+        close1.addEventListener('click', () => {
+            modal1.style.display = 'none'
+        })
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal1) {
+                modal1.style.display = 'none'
+            }
+        })
+    </script>
+     <script>
+        // Event listeners
+
+        const btn2 = document.getElementById('btn2')
+        const modal2 = document.getElementById('modal2')
+        const close2 = document.getElementById('close2')
+
+        // Event listeners
+        btn2.addEventListener('click', () => {
+            modal2.style.display = 'inline-block'
+            modal2.className = 'modal animate__animated animate__bounceIn'
+        })
+
+        close2.addEventListener('click', () => {
+            modal2.style.display = 'none'
+        })
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal2) {
+                modal2.style.display = 'none'
+            }
+        })
+    </script>
+     <script>
+        // Event listeners
+
+        const btn3 = document.getElementById('btn3')
+        const modal3 = document.getElementById('modal3')
+        const close3 = document.getElementById('close3')
+
+        // Event listeners
+        btn3.addEventListener('click', () => {
+            modal3.style.display = 'inline-block'
+            modal3.className = 'modal animate__animated animate__bounceIn'
+        })
+
+        close3.addEventListener('click', () => {
+            modal3.style.display = 'none'
+        })
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal3) {
+                modal3.style.display = 'none'
             }
         })
     </script>
