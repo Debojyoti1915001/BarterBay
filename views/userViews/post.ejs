@@ -180,7 +180,9 @@ https://templatemo.com/tm-551-stand-blog
                                 <%}%>
                           </div>
                       </div>
+                        <%if( post.score!=0){%>
                         <button type="submit" id="btn"><h4>Buy with <%= post.score%> Trade Credits</h4></button>
+                        <%}%>
                         <br>
                         <a href="/user/chat/<%= post.user%>/<%= post._id%>"><h4>Chat With User</h4></a>
                       <%}%>
