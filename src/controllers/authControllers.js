@@ -389,7 +389,7 @@ module.exports.ratings_post = async (req, res) => {
             res.redirect('/')
         }
     });
-    res.send(doc)
+    res.redirect('/')
 }
 
 module.exports.search_post = async (req, res) => {
@@ -482,7 +482,7 @@ module.exports.delete_get = async (req, res) => {
             res.redirect('/')
         }
     });
-    res.redirect('/user/deals')
+    res.redirect('/user/deals/false')
 }
 module.exports.comment_post = async (req, res) => {
     const id = req.params.id
