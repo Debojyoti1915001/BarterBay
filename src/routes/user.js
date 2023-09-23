@@ -80,4 +80,8 @@ router.post('/barter/:id',requireAuth, authController.barter_post)
 router.get('/accept/:id1/:id2',requireAuth, authController.accept_get)
 router.get('/profile',requireAuth, authController.user_get)
 router.get('/buy/:id',requireAuth, authController.buy_get)
+router.post('/credits/:id',requireAuth, authController.credits_post)
+router.get('/acceptCredits/:id/:id1/:id2',requireAuth, authController.acceptCredits_get)
+
+
 module.exports = router

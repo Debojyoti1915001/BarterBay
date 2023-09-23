@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Document = require('../models/Document')
 const Comment = require('../models/Comment')
 const Chat = require('../models/Chat')
+const Credits = require('../models/Credits')
 const jwt = require('jsonwebtoken')
 const { signupMail, passwordMail } = require('../config/nodemailer')
 const path = require('path')
@@ -201,14 +202,14 @@ module.exports.post_get = async (req, res) => {
     const id=req.params.id
     const _post=await Document.findOne({ _id: id})
     const post1=await _post.populate('comment').execPopulate()
-    
+    const post2=await post1.populate('credits').execPopulate()
     const user=req.user
     var isUser=false
     if(String(post1.user)==String(user._id)){
         isUser=true
     }
     
-    const post=await post1.populate('deals').execPopulate()
+    const post=await post2.populate('deals').execPopulate()
     
     console.log(post)
     // await Document.findOneAndUpdate({ _id: post._id }, { $set: { deals:["649729c22f1b2c38ac2677fd"]} }, { new: true }, (err, doc) => {
@@ -646,3 +647,57 @@ module.exports.buy_get = async (req, res) => {
     }
     res.redirect('/user/profile')
  }
+
+
+module.exports.credits_post = async (req, res) => {
+    const id = req.params.id
+    const _credits=req.body.credits
+    const document = await Document.findOne({ _id: id })
+    const credits=document.credits
+    const newCredits=new Credits({
+        name:req.user.name,
+        user:req.user._id,
+        amount:_credits,
+    })
+    let saveCredits = await newCredits.save()
+    credits.push(saveCredits._id)
+    const doc = await Document.findOneAndUpdate({ _id: id }, { $set: { credits } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    console.log(doc)
+    res.redirect(`/user/post/${id}`)
+}
+
+module.exports.acceptCredits_get = async (req, res) => {
+    const postId=req.params.id
+    //id of the requested user
+    const requestedUserId=req.params.id1
+    //requested user need to send this amount
+    const requestedAmountString=req.params.id2
+    const requestedAmount=parseInt(requestedAmountString)
+    const requestedUser=await User.findOne({ _id : requestedUserId })
+    if(requestedUser.score>requestedAmount||requestedUser.score==requestedAmount){
+        const user=await User.findOne({ _id : req.user._id })
+        const currentScoreOfSeller=user.score+requestedAmount
+        const currentScoreOfBuyer=requestedUser.score-requestedAmount
+        await User.findOneAndUpdate({ _id: requestedUserId }, { $set: { score: currentScoreOfBuyer} }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
+        await User.findOneAndUpdate({ _id: req.user._id }, { $set: { score: currentScoreOfSeller} }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
+        await Document.findOneAndUpdate({ _id:  postId}, { $set: { active:false,boughtBy:requestedUserId } }, { new: true }, (err, doc) => {
+            if (err) {
+                res.redirect('/')
+            }
+        });
+    }
+    
+    res.redirect('/')
+}

@@ -54,6 +54,10 @@ const documentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId ,
         ref:'Comment'
     }],
+    credits:[{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'Credits'
+    }],
     score: {
         type: Number,
         trim: true,
