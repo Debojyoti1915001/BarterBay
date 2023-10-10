@@ -58,11 +58,20 @@ const documentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId ,
         ref:'Credits'
     }],
+    perhour:[{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'Perhour'
+    }],
     score: {
         type: Number,
         trim: true,
         default:0
     },
+    perhour: {
+        type: Number,
+        trim: true,
+        default:0
+    }
 })
 
 /*diseaseSchema.virtual('owner',{

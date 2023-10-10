@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Perhour = require('../models/Perhour')
 const Document = require('../models/Document')
 const Comment = require('../models/Comment')
 const Chat = require('../models/Chat')
@@ -228,7 +229,7 @@ module.exports.post_get = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
    try{
-    const { name, desc, tags,type,score } = req.body
+    const { name, desc, tags,type,score,perhour } = req.body
     console.log(req.body)
     const picture = req.file.path
     const tagsArray = []
@@ -263,7 +264,7 @@ module.exports.createPost = async (req, res) => {
         }
     }
     const id=name1+random
-    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray ,score})
+    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray ,score,perhour})
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
@@ -420,6 +421,7 @@ module.exports.search_post = async (req, res) => {
         document
     })
 }
+
 module.exports.tag_post = async (req, res) => {
     const search = req.params.id
     const allDocument = await Document.find({active:true})
@@ -649,7 +651,7 @@ module.exports.buy_get = async (req, res) => {
  }
 
 
-module.exports.credits_post = async (req, res) => {
+ module.exports.credits_post = async (req, res) => {
     const id = req.params.id
     const _credits=req.body.credits
     const document = await Document.findOne({ _id: id })
@@ -669,6 +671,27 @@ module.exports.credits_post = async (req, res) => {
     console.log(doc)
     res.redirect(`/user/post/${id}`)
 }
+module.exports.perhour_post = async (req, res) => {
+    const id = req.params.id
+    const _perhour=req.body.perhour
+    const document = await Document.findOne({ _id: id })
+    const perhour=document.perhour
+    const newPerhour=new Perhour({
+        name:req.user.name,
+        user:req.user._id,
+        amount:_perhour,
+    })
+    let savePerhour = await newPerhour.save()
+    perhour.push(savePerhour._id)
+    const doc = await Perhour.findOneAndUpdate({ _id: id }, { $set: { perhour } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    console.log(doc)
+    res.redirect(`/user/post/${id}`)
+}
+
 
 module.exports.acceptCredits_get = async (req, res) => {
     const postId=req.params.id
@@ -701,3 +724,5 @@ module.exports.acceptCredits_get = async (req, res) => {
     
     res.redirect('/')
 }
+
+
