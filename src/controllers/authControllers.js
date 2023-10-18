@@ -673,17 +673,23 @@ module.exports.buy_get = async (req, res) => {
 }
 module.exports.perhour_post = async (req, res) => {
     const id = req.params.id
-    const _perhour=req.body.perhour
+    const hrs=req.body.hrs
     const document = await Document.findOne({ _id: id })
+    const user=await User.findOne({_id:document.user})
     const perhour=document.perhour
+    const total=perhour*hrs
     const newPerhour=new Perhour({
         name:req.user.name,
         user:req.user._id,
-        amount:_perhour,
+        amount:total,
     })
     let savePerhour = await newPerhour.save()
-    perhour.push(savePerhour._id)
-    const doc = await Perhour.findOneAndUpdate({ _id: id }, { $set: { perhour } }, { new: true }, (err, doc) => {
+    await User.findOneAndUpdate({ _id: req.user._id}, { $set: { score: req.user.score - total } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    await User.findOneAndUpdate({ _id: user._id }, { $set: { score: user.score  + total} }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }

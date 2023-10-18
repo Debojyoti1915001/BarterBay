@@ -83,6 +83,6 @@ router.get('/buy/:id',requireAuth, authController.buy_get)
 router.post('/credits/:id',requireAuth, authController.credits_post)
 router.post('/perhour/:id',requireAuth, authController.perhour_post)
 router.get('/acceptCredits/:id/:id1/:id2',requireAuth, authController.acceptCredits_get)
-
+// router.post('/perhour/:id',requireAuth, authController._post)
 
 module.exports = router
