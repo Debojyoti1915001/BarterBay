@@ -694,7 +694,7 @@ module.exports.perhour_post = async (req, res) => {
             res.redirect('/')
         }
     });
-    console.log(doc)
+    // console.log(doc)
     res.redirect(`/user/post/${id}`)
 }
 
