@@ -229,8 +229,9 @@ module.exports.post_get = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
    try{
-    const { name, desc, tags,type,score,perhour } = req.body
+    const { name, desc, tags,type,score,perhour,hour } = req.body
     console.log(req.body)
+    
     const picture = req.file.path
     const tagsArray = []
     var cur = ""
@@ -264,7 +265,7 @@ module.exports.createPost = async (req, res) => {
         }
     }
     const id=name1+random
-    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray ,score,perhour})
+    const document = new Document({ name, desc, id,type,url, user: req.user._id, tags: tagsArray ,score,perhour,hour})
     let saveDocument = await document.save()
     console.log(saveDocument)
     res.redirect('/')
@@ -675,6 +676,9 @@ module.exports.perhour_post = async (req, res) => {
     const id = req.params.id
     const hrs=req.body.hrs
     const document = await Document.findOne({ _id: id })
+    if(hrs>document.hour){
+        return
+    }
     const user=await User.findOne({_id:document.user})
     const perhour=document.perhour
     const total=perhour*hrs

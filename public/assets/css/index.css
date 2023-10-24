@@ -1,6 +1,8 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat:700);
-
+.inline{
+  display: inline-block;
+}
 
 .slidemain section {
 	font-family: 'Montserrat', sans-serif;
@@ -243,7 +245,7 @@
     outline: none;
   }
   .modal .modal-container .cta {
-    margin-top: 3rem;
+    margin-top: 1rem;
     display: flex;
     align-items: start;
   }
@@ -342,7 +344,7 @@
     outline: none;
   }
   .modal .modal-container .cta {
-    margin-top: 3rem;
+    margin-top: 1rem;
     display: flex;
     align-items: start;
   }
@@ -442,7 +444,7 @@
     outline: none;
   }
   .modal .modal-container .cta {
-    margin-top: 3rem;
+    margin-top: 1rem;
     display: flex;
     align-items: start;
   }

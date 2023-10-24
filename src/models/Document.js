@@ -6,6 +6,10 @@ const documentSchema = mongoose.Schema({
         type: String,
         trim: true,
     },
+    hour: {
+        type: Number,
+        trim: true,
+    },
     id:{
         type: String,
         trim: true,
