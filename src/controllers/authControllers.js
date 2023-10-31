@@ -209,15 +209,13 @@ module.exports.post_get = async (req, res) => {
     if(String(post1.user)==String(user._id)){
         isUser=true
     }
+    const post3=await post2.populate('deals').execPopulate()
     
-    const post=await post2.populate('deals').execPopulate()
     
-    console.log(post)
-    // await Document.findOneAndUpdate({ _id: post._id }, { $set: { deals:["649729c22f1b2c38ac2677fd"]} }, { new: true }, (err, doc) => {
-    //     if (err) {
-    //         res.redirect('/')
-    //     }
-    // });
+    const post=await post3.populate('boughtByArray').execPopulate()
+    
+    console.log(post);
+    
     res.render('./userViews/post',
     {
         post,
@@ -229,7 +227,8 @@ module.exports.post_get = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
    try{
-    const { name, desc, tags,type,score,perhour,hour } = req.body
+    const { name, desc, tags,type,perhour,hour } = req.body
+    const score = 0 //to be taken from req body 
     console.log(req.body)
     
     const picture = req.file.path
@@ -672,6 +671,8 @@ module.exports.buy_get = async (req, res) => {
     console.log(doc)
     res.redirect(`/user/post/${id}`)
 }
+
+
 module.exports.perhour_post = async (req, res) => {
     const id = req.params.id
     const hrs=req.body.hrs
@@ -694,6 +695,19 @@ module.exports.perhour_post = async (req, res) => {
         }
     });
     await User.findOneAndUpdate({ _id: user._id }, { $set: { score: user.score  + total} }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    const boughtByArray=document.boughtByArray
+    boughtByArray.push(savePerhour._id)
+    await Document.findOneAndUpdate({ _id: document._id }, { $set: { boughtByArray } }, { new: true }, (err, doc) => {
+        if (err) {
+            res.redirect('/')
+        }
+    });
+    const hour=document.hour-hrs
+    await Document.findOneAndUpdate({ _id: document._id }, { $set: { hour } }, { new: true }, (err, doc) => {
         if (err) {
             res.redirect('/')
         }

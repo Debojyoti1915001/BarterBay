@@ -158,6 +158,14 @@ https://templatemo.com/tm-551-stand-blog
                           </a></li>
                         <% } %>
                     </ul>
+                    <ul class="post-info">
+                      <h4> People who booked: </h4>
+                      <% for(var p of post.boughtByArray){ %>
+                        <li> 
+                            <%= p.name %> | <%= p.amount %> 
+                        </li>
+                        <% } %>
+                    </ul>
                     <p>
                       <%= post.desc %>
                     </p>

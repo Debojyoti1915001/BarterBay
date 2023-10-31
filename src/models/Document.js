@@ -75,7 +75,11 @@ const documentSchema = mongoose.Schema({
         type: Number,
         trim: true,
         default:0
-    }
+    },
+    boughtByArray:[{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'Perhour'
+    }]
 })
 
 /*diseaseSchema.virtual('owner',{
